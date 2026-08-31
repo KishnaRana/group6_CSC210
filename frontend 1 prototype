@@ -1,0 +1,578 @@
+/* 31st aug 2026 prototype */
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>OurWater - Report Water Problems</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 10px;
+      background-color: #CCE5FF;
+      font-family: Arial, sans-serif;
+      color: #000033;
+    }
+    
+    .topbar {
+      background-color: #0066CC;
+      padding: 15px;
+      color: white;
+      border-bottom: 3px solid #003366;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .nav-links {
+      font-size: 14px;
+    }
+    
+    .nav-links a {
+      color: white;
+      margin-right: 20px;
+      text-decoration: underline;
+    }
+    
+    .hero {
+      background-color: #FFFFFF;
+      padding: 30px;
+      text-align: center;
+      border: 2px solid #0066CC;
+      margin: 15px 0;
+    }
+    
+    .hero h1 {
+      font-size: 36px;
+      color: #003366;
+      margin-top: 0;
+    }
+    
+    .hero-copy {
+      font-size: 16px;
+      color: #444;
+    }
+    
+    .hero-note {
+      background-color: #FFFFCC;
+      padding: 15px;
+      border: 2px solid #FFCC00;
+      margin-top: 15px;
+      display: inline-block;
+      text-align: left;
+    }
+    
+    .hero-note strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #003366;
+    }
+    
+    .online {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #00CC00;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    
+    main {
+      background-color: #E6F2FF;
+      padding: 20px;
+    }
+    
+    .section-label {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .section-label h2 {
+      font-size: 28px;
+      color: #003366;
+      margin: 0;
+    }
+    
+    .dashboard {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .panel {
+      background-color: white;
+      border: 2px solid #0066CC;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 3px 3px 5px gray;
+    }
+    
+    .form-panel {
+      flex: 1;
+      min-width: 400px;
+      max-width: 600px;
+    }
+    
+    .side-stack {
+      flex: 0 1 300px;
+    }
+    
+    .form-intro {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .field.full {
+      grid-column: 1 / -1;
+    }
+    
+    label {
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 5px;
+      color: #003366;
+    }
+    
+    label span {
+      color: #FF0000;
+    }
+    
+    input, select, textarea {
+      padding: 10px;
+      border: 1px solid #999;
+      font-size: 14px;
+      font-family: Arial;
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .form-footer {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #DDD;
+    }
+    
+    .privacy {
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    
+    .submit {
+      background-color: #0066CC;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+    
+    .submit:hover {
+      background-color: #0052A3;
+    }
+    
+    .submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .stats-panel {
+      padding: 20px;
+    }
+    
+    .panel-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #003366;
+      margin: 0 0 15px 0;
+    }
+    
+    .panel-title small {
+      font-size: 12px;
+      color: #999;
+      font-weight: normal;
+    }
+    
+    .stat {
+      padding: 12px 0;
+      border-bottom: 1px solid #EEE;
+    }
+    
+    .stat:last-child {
+      border-bottom: none;
+    }
+    
+    .stat-icon {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+    
+    .stat strong {
+      display: block;
+      font-size: 20px;
+      color: #003366;
+    }
+    
+    .stat small {
+      font-size: 12px;
+      color: #999;
+    }
+    
+    .track-panel {
+      background-color: #003366;
+      color: white;
+    }
+    
+    .track-panel .panel-title {
+      color: white;
+    }
+    
+    .track-panel p {
+      font-size: 13px;
+      margin: 0 0 15px 0;
+      color: #CCC;
+    }
+    
+    .track-form {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .track-form input {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      background-color: #0052A3;
+      color: white;
+    }
+    
+    .track-form input::placeholder {
+      color: #AAA;
+    }
+    
+    .track-form button {
+      background-color: #66CCFF;
+      color: #003366;
+      border: none;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 3px;
+    }
+    
+    .notice {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #E6F2FF;
+      border: 1px solid #0066CC;
+      color: #003366;
+      font-size: 12px;
+      border-radius: 3px;
+    }
+    
+    .notice.show {
+      display: block;
+    }
+    
+    .recent {
+      padding: 20px;
+    }
+    
+    .complaint {
+      padding: 10px 0;
+      border-bottom: 1px solid #EEE;
+    }
+    
+    .complaint:last-child {
+      border-bottom: none;
+    }
+    
+    .complaint-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background-color: #FF9900;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    
+    .complaint-dot.green {
+      background-color: #00AA00;
+    }
+    
+    .complaint strong {
+      display: block;
+      color: #003366;
+      font-size: 14px;
+    }
+    
+    .complaint small {
+      color: #999;
+      font-size: 12px;
+    }
+    
+    .badge {
+      background-color: #FFFFCC;
+      color: #FF9900;
+      padding: 3px 8px;
+      font-size: 11px;
+      border-radius: 3px;
+      margin-left: 8px;
+    }
+    
+    .badge.green {
+      background-color: #E6FFE6;
+      color: #00AA00;
+    }
+    
+    .success-message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      background-color: #E6FFE6;
+      color: #006600;
+      border: 1px solid #00AA00;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    
+    .success-message.show {
+      display: block;
+    }
+    
+    footer {
+      background-color: #F0F0F0;
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      border-top: 2px solid #0066CC;
+      margin-top: 30px;
+    }
+    
+    footer strong {
+      color: #003366;
+    }
+    
+    @media (max-width: 800px) {
+      .dashboard {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .form-panel {
+        min-width: 100%;
+        max-width: 100%;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .submit {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div style="padding: 0 10px;">
+    <div class="logo">OurWater - Water Complaint Form</div>
+    <div class="nav-links">
+      <a href="#report">Report Problem</a>
+      <a href="#recent">My Complaints</a>
+      <a href="tel:9876543210">Call: 9876543210</a>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>Report a Water Problem</h1>
+  <p class="hero-copy">Tell us about your water problem and we will help you</p>
+  <div class="hero-note">
+    <strong><span class="online"></span>We are online</strong>
+    <p>Our team checks problems within 24 hours</p>
+  </div>
+</div>
+
+<main>
+  <div class="section-label" id="report">
+    <h2>Submit Your Complaint Here</h2>
+    <span class="required-note"><span style="color: red">*</span> means you must fill it</span>
+  </div>
+  
+  <div class="dashboard">
+    <div class="panel form-panel">
+      <p class="form-intro">Please tell us about your problem:</p>
+      
+      <form id="complaint-form">
+        <div class="form-grid">
+          <div class="field">
+            <label for="name">Your name <span>*</span></label>
+            <input id="name" name="name" type="text" placeholder="Rajesh Kumar" required>
+          </div>
+          
+          <div class="field">
+            <label for="phone-number">Your phone <span>*</span></label>
+            <input id="phone-number" name="phone" type="tel" placeholder="9876543210" required>
+          </div>
+          
+          <div class="field">
+            <label for="problem">What is wrong? <span>*</span></label>
+            <select id="problem" name="problem" required>
+              <option value="">-- Pick one --</option>
+              <option>No water supply</option>
+              <option>Low water pressure</option>
+              <option>Pipeline leakage</option>
+              <option>Contaminated water</option>
+              <option>Damaged water meter</option>
+              <option>Other problem</option>
+            </select>
+          </div>
+          
+          <div class="field">
+            <label for="duration">How long? <span>*</span></label>
+            <select id="duration" name="duration" required>
+              <option value="">-- How long --</option>
+              <option>Less than a day</option>
+              <option>1-3 days</option>
+              <option>4-7 days</option>
+              <option>More than a week</option>
+              <option>More than a month</option>
+            </select>
+          </div>
+          
+          <div class="field full">
+            <label for="location">Where is the problem? <span>*</span></label>
+            <input id="location" name="location" type="text" placeholder="123 CG Road, Navrangpura, Ahmedabad" required>
+          </div>
+          
+          <div class="field full">
+            <label for="details">Tell us more details <span>*</span></label>
+            <textarea id="details" name="details" placeholder="Describe what is happening..." required></textarea>
+          </div>
+        </div>
+        
+        <div class="form-footer">
+          <div class="privacy">We will use your info to contact you about this issue</div>
+          <button class="submit" type="submit">SUBMIT</button>
+        </div>
+        
+        <div class="success-message" id="success-message">
+          Your complaint was sent! Your number is <strong>JS-2024-1842</strong>
+        </div>
+      </form>
+    </div>
+    
+    <div class="side-stack">
+      <div class="panel stats-panel">
+        <div class="panel-title">Stats <small>Last month</small></div>
+        <div class="stat">
+          <span class="stat-icon">✓</span>
+          <div>
+            <strong>0%</strong>
+            <small>Fixed</small>
+          </div>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">⏰</span>
+          <div>
+            <strong>0 hrs</strong>
+            <small>We respond</small>
+          </div>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">🏠</span>
+          <div>
+            <strong>0</strong>
+            <small>Customers</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="panel track-panel">
+        <div class="panel-title">Track Your Complaint</div>
+        <p>Enter your number to check status</p>
+        <form class="track-form" id="track-form">
+          <input id="reference" type="text" placeholder="JS-2024-1842" required>
+          <button type="submit">→</button>
+        </form>
+        <div class="notice" id="track-notice">We found it! It is being looked at.</div>
+      </div>
+      
+      <div class="panel recent" id="recent">
+        <div class="panel-title">Recent <small>In your area</small></div>
+        <div class="complaint">
+          <span class="complaint-dot"></span>
+          <div>
+            <span class="badge">Fixing it</span>
+            <strong>Water pipe broke</strong>
+            <small>Satellite, Ahmedabad - 2 hours ago</small>
+          </div>
+        </div>
+        <div class="complaint">
+          <span class="complaint-dot green"></span>
+          <div>
+            <span class="badge green">FIXED</span>
+            <strong>No water</strong>
+            <small>Vastrapur, Ahmedabad - yesterday</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div style="padding: 10px;">
+    <strong>OurWater</strong> - We help with water problems
+    <br>
+    EMERGENCY: Call <strong>9876543210</strong>
+  </div>
+</footer>
+
+<script>
+  // form submit code
+  const complaintForm = document.getElementById("complaint-form");
+  const successMessage = document.getElementById("success-message");
+  
+  complaintForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const button = complaintForm.querySelector(".submit");
+    button.disabled = true;
+    button.textContent = "Sent!";
+    successMessage.classList.add("show");
+  });
+  
+  // track form code
+  document.getElementById("track-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    document.getElementById("track-notice").classList.add("show");
+  });
+</script>
+
+</body>
+</html>
