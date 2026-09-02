@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMC - Ahmedabad Water Distribution & Complaint Monitoring</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+<header>
+    <h1>Ahmedabad Municipal Corporation (AMC)</h1>
+    <p>Urban Water Distribution Complaint & GIS Monitoring System</p>
+</header>
+
+<div class="main-container">
+
+    <section class="card full-width">
+        <h2> Map</h2>
+        <p class="subtitle">Click anywhere on the map to pinpoint a leakage or water complaint location.</p>
+        <div id="map"></div>
+    </section>
+
+    <!-- Complaint Registration Form -->
+    <section class="card">
+        <h2>Register Complaint</h2>
+        <form id="complaintForm">
+            <div class="form-group">
+                <label for="zone">Ahmedabad Zone / Area:</label>
+                <select id="zone" required>
+                    <option value="Navrangpura">West Zone - Navrangpura</option>
+                    <option value="Satellite">South West Zone - Satellite / Bodakdev</option>
+                    <option value="Vastrapur">West Zone - Vastrapur</option>
+                    <option value="Maninagar">South Zone - Maninagar</option>
+                    <option value="Chandkheda">North Zone - Chandkheda</option>
+                    <option value="Nikol">East Zone - Nikol</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="coords">Selected Coordinates (Click on Map):</label>
+                <input type="text" id="coords" placeholder="e.g. 23.0365, 72.5611" readonly required>
+            </div>
+
+            <div class="form-group">
+                <label for="issueType">Issue Type:</label>
+                <select id="issueType" required>
+                    <option value="Pipeline Burst">Major Pipeline Burst</option>
+                    <option value="Contaminated Water">Water Contamination / Dirty Supply</option>
+                    <option value="Low Pressure">Low Supply Pressure</option>
+                    <option value="Complete Outage">No Water Supply</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="severity">Severity (1-5):</label>
+                    <input type="number" id="severity" min="1" max="5" value="3" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="affectedPop">Est. Affected People:</label>
+                    <input type="number" id="affectedPop" min="1" max="30000    " placeholder="e.g., 300" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Submit to Priority Queue</button>
+        </form>
+    </section>
+
+
+    <section class="card">
+        <h2>Queue </h2>
+        <p class="subtitle">Complaints are dynamically re-ordered by computed Priority Score.</p>
+
+        <div class="table-container">
+            <table id="queueTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Area</th>
+                    <th>Issue</th>
+                    <th>Severity</th>
+                    <th>Affected Pop</th>
+                    <th>Priority Score</th>
+                </tr>
+                </thead>
+                <tbody id="queueTableBody">
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
