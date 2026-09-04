@@ -28,13 +28,24 @@
     }
     
     .nav-links {
-      font-size: 14px;
+      font-size: 22px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 15px auto 0;
+      width: 100%;
     }
     
     .nav-links a {
       color: white;
-      margin-right: 20px;
-      text-decoration: underline;
+      width: fit-content;
+      padding: 16px 12px;
+      background-color: #0052A3;
+      border: 1px solid #66CCFF;
+      border-radius: 4px;
+      text-decoration: none;
     }
     
     .hero {
@@ -402,20 +413,15 @@
 <div class="topbar">
   <div style="padding: 0 10px;">
     <div class="logo">OurWater - Water Complaint Form</div>
-    <div class="nav-links">
-      <a href="#report">Report Problem</a>
-      <a href="#recent">My Complaints</a>
-      <a href="tel:9876543210">Call: 9876543210</a>
-    </div>
   </div>
 </div>
 
 <div class="hero">
   <h1>Report a Water Problem</h1>
   <p class="hero-copy">Tell us about your water problem and we will help you</p>
-  <div class="hero-note">
-    <strong><span class="online"></span>We are online</strong>
-    <p>Our team checks problems within 24 hours</p>
+  <div class="nav-links">
+    <a href="#report">Report Problem</a>
+    <a href="#recent">My Complaints</a>
   </div>
 </div>
 
